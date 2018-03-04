@@ -12,7 +12,7 @@ Welcome to Pwnie Island!
 
 ### Requirements
 
-From the official README
+From the official README:
 
 * At least 2GB of RAM, more RAM will allow more instances to be run on a single machine
 * The Game Server does not need any graphics hardware and runs purely on console. It is known to run well on Amazon AWS and Digital Ocean VPS instances.
@@ -20,18 +20,21 @@ From the official README
 * For a server with 2GB of RAM, it is not recommended to run more than 5 instances, but a server with 8GB of RAM can typically run as many as the CPU can handle. 
 * It is recommended to use 2-3 instances per CPU core if you have sufficient RAM.  You may be able to run 4-5 instances per core, but doing so may introduce slight lag.
 
-* The `pwn3.tar.gz` file containing the client and server files is 1.8G. So several GB of free space is required as well.
+* The files for the client and server are over 2GB as well, so several GB of free disk space are required.
 
 There are several ways to build and deploy your own server.
 
 ### Option 1 - Original
-One option is to download and follow the instructions included in the official files, or use the docker compose files provided by this repository. The original files on the official website can be found here [http://www.pwnadventure.com/#server](http://www.pwnadventure.com/#server).
+One option is to download and follow the instructions included in the README of the official files. The download can be found on the official website here [http://www.pwnadventure.com/#server](http://www.pwnadventure.com/#server).
 
 ### Option 2 - Guide
-[@Beaujeant](https://twitter.com/Beaujeant) created an excellent and easy to follow step-by-step guide, using the official files from Option 1. It was also the basis for building the docker image from Option 3. It can be found here: [https://github.com/beaujeant/PwnAdventure3/blob/master/INSTALL-server.md](https://github.com/beaujeant/PwnAdventure3/blob/master/INSTALL-server.md). 
+[@Beaujeant](https://twitter.com/Beaujeant) created an excellent, and easy to follow step-by-step guide. It was also the basis for building the docker image from Option 3. The guide can be found here: [https://github.com/beaujeant/PwnAdventure3/blob/master/INSTALL-server.md](https://github.com/beaujeant/PwnAdventure3/blob/master/INSTALL-server.md). 
 
 ### Option 3 - Docker
-The server requires large files from the client. Unfortunately the files for the client are downloaded via the Launcher requiring a GUI. Because of that, and in case the hosted files disappear, the files are mirrored on Amazon S3. The `pwn3.tar.gz` contains the Linux `client/` and `server/` files.
+
+This option is super easy, as long as `docker` and `docker-compose` are installed on a host. It makes it easy to run and tear down a server, without making changes to the actual host system.
+
+First, gather all necessary files:
 
 ```bash
 git clone https://github.com/LiveOverflow/PwnAdventure3.git
@@ -40,11 +43,13 @@ wget https://s3.eu-central-1.amazonaws.com/pwnadventure3/pwn3.tar.gz
 tar -xvf pwn3.tar.gz
 ```
 
-In order to run the server `docker` and `docker-compose` have to be installed. Docker is moving fast, so it's a good idea to remove the system docker installation and follow the current official steps for installation: 
+In order to run the server, `docker` and `docker-compose` have to be installed. Docker is moving fast, so it's a good idea to follow the current official steps for installation (which could also include to remove an older system version of docker): 
 
 * Docker CE Ubuntu: [https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/). 
 * `docker-compose`: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
-* make sure the current user is part of the `docker` group with: `sudo usermod -a -G docker $USER`. restart or relogin and verify that the user has the group with `id`.
+* make sure the current user is part of the `docker` group with: `sudo usermod -a -G docker $USER`. restart or re-login and verify with `id` that the user is part of the docker group.
+
+Then simply build the image and launch the master and game server:
 
 ```bash
 docker-compose build
@@ -55,9 +60,11 @@ docker-compose up
 
 ## Install Client
 
-Download client from the official website here: http://www.pwnadventure.com/#downloads
+First download the client from the official website here: http://www.pwnadventure.com/#downloads
 
-To get a client connected to the server, the `server.ini` for the client  has to be modified. The server expects that hostnames `master.pwn3` and `game.pwn3` are being used. Change client `server.ini` like this:
+To get a client connected to the new server, the `server.ini` for the client has to be modified. The server launched with docker expects that hostnames `master.pwn3` and `game.pwn3` are being used (These could theoretically be changed in the docker/setup files). 
+
+The `server.ini` for the client has to look something like this:
 
 ```
 [MasterServer]
@@ -71,7 +78,8 @@ Username=
 Password=
 Instances=
 ```
-Make sure that the client can reache these hosts, for example by adding them to the `/etc/hosts`. In this example the server is running on `192.168.178.57`:
+
+Make sure that the client can reach these hosts, for example by adding them to the `/etc/hosts` file. In this example the server is running on `192.168.178.57` and the entry for them would be:
 
 ```
 192.168.178.57  master.pwn3
@@ -80,17 +88,20 @@ Make sure that the client can reache these hosts, for example by adding them to 
 
 **Warning:** Using an IP as `Hostname` in the `server.ini` does not work! I spent 2 hours trying to figure out what was wrong.
 
+To stop the server, simply type `docker-compose down`.
 
-To stop the server, simply type `docker-compose down`
+**Warning:** The database file is not persistent - taking down the container resets everything. So backup first.
 
 ## Troubleshooting
 
 ### Error: docker-compose build
+
 ```bash
 $ docker-compose build
 Building init
 ERROR: Error processing tar file(exit status 1): write /client/PwnAdventure3_Data/PwnAdventure3/PwnAdventure3/Content/Paks/Characters.pak: no space left on device
 ```
+
 A: Get more disk space.
 
 ```bash
@@ -103,7 +114,7 @@ A: Your user is probably not part of the `docker` group or docker service not ru
 
 ### File Integrity
 
-Check if the archive was corrupted
+Check if the archive is corrupted
 
 ```bash
 $ md5sum pwn3.tar.gz
@@ -115,7 +126,8 @@ $ sha1sum pwn3.tar.gz
 ### PwnAdventure3 Client Errors
 
 **Connection Error: Unable to connect to master server**
-MasterServer is not reachable.
+
+This probably means that the MasterServer is not reachable.
 
 * Client issues:
   * Check the `[MasterServer]` entry in the client's `server.ini`
@@ -126,22 +138,24 @@ MasterServer is not reachable.
   * Check with `sudo netstat -tulpn`
     * Is the master server listening: `tcp6 0 0 :::3333 :::* LISTEN 31913/docker-proxy`
   * Check `docker ps` if the two containers are up
-    * master server running? `880f93374070 pwn3server "/opt/pwn3/setup/mas…" 11 seconds ago Up 10 seconds 0.0.0.0:3333->3333/tcp, 5432/tcp pwnadventure3_master_1`
+    * master server running? `880f93374070 pwn3server "/opt/pwn3/setup/mas…" 0.0.0.0:3333->3333/tcp, 5432/tcp pwnadventure3_master_1`
 
 **Waiting in connection queue...**
-MasterServer reachable and provided the client a GameServer to connect to, but it's not running.
+
+This means the MasterServer *is* reachable and is waiting now for a free GameServer that can be given to the client. This probably means that no GameServer is running, or was not able to connect to the MasterServer.
+
 * Server issues:
-  * Is the game server running and listening on port `3000`? 
-  *  Check with `sudo netstat -tulpn`
+  * Is a game server running and listening on port `3000-3005`? 
+  *  Check listening processes with `sudo netstat -tulpn`
     * `tcp6 0 0 :::3000 :::* LISTEN 32160/docker-proxy`
-  * Is `pwnadventure3_game_1` container Status: running? Check with `docker ps -a`
-    * `84343f81034f pwn3server "/opt/pwn3/setup/gam…" 8 seconds ago Up 7 seconds        0.0.0.0:3000-3010->3000-3010/tcp, 5432/tcp pwnadventure3_game_1`
-  * do you see `line 1: 7 Killed ./PwnAdventure3Server; pwnadventure3_game_1 exited with code 137` in the log?
+  * Is `pwnadventure3_game_1` container running? Check with `docker ps -a`
+    * `84343f81034f pwn3server "/opt/pwn3/setup/gam…" 0.0.0.0:3000-3010->3000-3010/tcp, 5432/tcp pwnadventure3_game_1`
+  * do you see the following line in the log from `docker-compose up`: `line 1: 7 Killed ./PwnAdventure3Server; pwnadventure3_game_1 exited with code 137`
       * GET MORE RAM!
 
 ### Docker versions
 
-These versions were used during testing:
+These versions were used during testing as a host:
 
 ```bash
 $ uname -a
@@ -157,9 +171,9 @@ Docker version 17.12.1-ce, build 7390fc6
 
 ## Credits
 
-The true heroes are the ones that built the game <3
+The true heroes, are the people who built the game <3
 
-> Pwn Adventure 3 is the brainchild of one Rusty Wagner. He's responsible for the idea, the planning, and nearly all of the execution (programming, level design, quests, and so forth). Without him, there would be no game! Special thanks also goes to the Ghost in the Shellcode organizers for their support during development and testing.
+> Pwn Adventure 3 is the brainchild of one [Rusty Wagner](https://twitter.com/eipwned). He's responsible for the idea, the planning, and nearly all of the execution (programming, level design, quests, and so forth). Without him, there would be no game! Special thanks also goes to the Ghost in the Shellcode organizers for their support during development and testing.
 
-By Vector35 - https://vector35.com/ (also creators of popular Disassembler https://binary.ninja/)
+By Vector35 - https://vector35.com/ (the company behind the popular disassembler [Binary Ninja](https://binary.ninja/))
 
