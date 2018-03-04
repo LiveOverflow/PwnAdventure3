@@ -1,0 +1,45 @@
+version: '3.2'
+services:
+        init:
+                build: .
+                image: pwn3server
+        master:
+                image: pwn3server
+                hostname: master.pwn3
+                networks:
+                        default:
+                                aliases:
+                                        - "master.pwn3"
+                ports:
+                        - "3333:3333"
+                volumes:
+                        - type: bind
+                          source: "./server"
+                          target: "/opt/pwn3/server"
+                        - type: bind
+                          source: "./client"
+                          target: "/opt/pwn3/client"
+                command: "/opt/pwn3/setup/masterserver.sh"
+                depends_on:
+                        - init
+        game:
+                image: pwn3server
+                hostname: game.pwn3
+                networks:
+                        default:
+                                aliases:
+                                        - "master.pwn3"
+                ports:
+                        - "3000-3010:3000-3010"
+                volumes:
+                        - type: bind
+                          source: "./server"
+                          target: "/opt/pwn3/server"
+                        - type: bind
+                          source: "./client"
+                          target: "/opt/pwn3/client"
+                command: "/opt/pwn3/setup/gameserver.sh"
+                depends_on:
+                        - init
+                        - master
+
