@@ -53,6 +53,10 @@ docker-compose up
 
 `docker-compose up` can also run in detached/background mode with `-d`.
 
+## Install Client
+
+Download client from the official website here: http://www.pwnadventure.com/#downloads
+
 To get a client connected to the server, the `server.ini` for the client  has to be modified. The server expects that hostnames `master.pwn3` and `game.pwn3` are being used. Change client `server.ini` like this:
 
 ```
