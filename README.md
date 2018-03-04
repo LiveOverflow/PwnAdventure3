@@ -151,3 +151,11 @@ $ docker --version
 Docker version 17.12.1-ce, build 7390fc6
 ```
 
+## Credits
+
+The true heroes are the ones that built the game <3
+
+> Pwn Adventure 3 is the brainchild of one Rusty Wagner. He's responsible for the idea, the planning, and nearly all of the execution (programming, level design, quests, and so forth). Without him, there would be no game! Special thanks also goes to the Ghost in the Shellcode organizers for their support during development and testing.
+
+By Vector35 - https://vector35.com/ (also creators of popular Disassembler https://binary.ninja/)
+
