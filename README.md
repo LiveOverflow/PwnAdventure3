@@ -39,7 +39,7 @@ First, gather all necessary files:
 ```bash
 git clone https://github.com/LiveOverflow/PwnAdventure3.git
 cd PwnAdventure3
-wget https://s3.eu-central-1.amazonaws.com/pwnadventure3/pwn3.tar.gz
+wget http://pwnadventure.com/pwn3.tar.gz
 tar -xvf pwn3.tar.gz
 ```
 
