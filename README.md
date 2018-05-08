@@ -8,6 +8,14 @@ Welcome to Pwnie Island!
 
 - Official Site: [http://www.pwnadventure.com/](http://www.pwnadventure.com/)
 
+## YouTube Series
+
+This setup is part of a [video series](https://www.youtube.com/watch?v=RDZnlcnmPUA&index=0&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG) covering the different hacks and challenges in this game.
+
+* [Let's Play/Hack - Pwn Adventure 3: Pwnie Island - part 1](https://www.youtube.com/watch?v=RDZnlcnmPUA&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG)
+* [Setup Private Server with Docker - Pwn Adventure 3: part 2](https://www.youtube.com/watch?v=VkXZXwQP5FM&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=1)
+* [Information Gathering / Recon - Pwn Adventure 3: part 3](https://www.youtube.com/watch?v=pzM4o6qxssk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=2)
+
 ## Install Server
 
 ### Requirements
