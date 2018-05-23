@@ -19,6 +19,9 @@ services:
                         - type: bind
                           source: "./client"
                           target: "/opt/pwn3/client"
+                        - type: bind
+                          source: "./postgres-data"
+                          target: "/opt/pwn3/postgres-data"
                 command: "/opt/pwn3/setup/masterserver.sh"
                 depends_on:
                         - init
@@ -42,4 +45,3 @@ services:
                 depends_on:
                         - init
                         - master
-
