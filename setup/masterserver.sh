@@ -22,7 +22,7 @@ sleep 10
 su postgres -c "psql -f $PWN3/setup/postgres_init.sql -d template1"
 
 # clean up
-su pwn3 -c "rm /opt/pwn3/client/PwnAdventure3_Data/PwnAdventure3/PwnAdventure3/Saved/Logs/*"
+su root -c "rm /opt/pwn3/client/PwnAdventure3_Data/PwnAdventure3/PwnAdventure3/Saved/Logs/*"
 
 if [ -f /opt/pwn3/postgres-data/data.sql ]; then
     echo "Found data, making a backup now!"
@@ -36,8 +36,10 @@ else
 	su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-admin-team Admin"
 	
 	# get the master server creds
-	su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-server-account > /opt/pwn3/server/creds"
-
+	CREDS=$(su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-server-account > /tmp/out.tmp")
+	# use root to access the directory
+	su root -c "cat /tmp/out.tmp > /opt/pwn3/server/creds"
+	
 	# write the creds to the server.ini
 	USER=$(cat /opt/pwn3/server/creds | grep 'Username:' | cut -d ":" -f 2- | xargs)
 	PW=$(cat /opt/pwn3/server/creds | grep 'Password:' | cut -d ":" -f 2- | xargs)
