@@ -17,6 +17,7 @@ This setup is part of a [video series](https://www.youtube.com/playlist?list=PLh
 * [Information Gathering / Recon - Pwn Adventure 3: part 3](https://www.youtube.com/watch?v=pzM4o6qxssk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=2)
 * [Recover Game Classes with gdb - Pwn Adventure 3: part 4](https://www.youtube.com/watch?v=8wz2CM0483o&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=3)
 * [Hooking on Linux with LD_PRELOAD - Pwn Adventure 3: part 5](https://www.youtube.com/watch?v=W7MC05_JN68&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=4)
+* [Flying and our first Flag! (Cow King) - Pwn Adventure 3: part 6](https://www.youtube.com/watch?v=VzZi2AGAsOY&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=5)
 
 ## Install Server
 
