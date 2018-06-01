@@ -34,14 +34,18 @@ else
 	su pwn3 -c "psql master -f $PWN3/initdb.sql"
 	su pwn3 -c "psql master -f $PWN3/setup/postgres_master.sql"
 	su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-admin-team Admin"
-	
-	# get the master server creds
-	su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-server-account > /opt/pwn3/server/creds"
+fi
 
-	# write the creds to the server.ini
-	USER=$(cat /opt/pwn3/server/creds | grep 'Username:' | cut -d ":" -f 2- | xargs)
-	PW=$(cat /opt/pwn3/server/creds | grep 'Password:' | cut -d ":" -f 2- | xargs)
-	cat >/opt/pwn3/client/PwnAdventure3_Data/PwnAdventure3/PwnAdventure3/Content/Server/server.ini <<EOL
+# cleanup all previous/old server master creds
+su pwn3 -c "psql master -f $PWN3/setup/postgres_cleanup.sql"
+
+# get new master server creds
+su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-server-account > /opt/pwn3/server/creds"
+
+# write the new creds to the server.ini
+USER=$(cat /opt/pwn3/server/creds | grep 'Username:' | cut -d ":" -f 2- | xargs)
+PW=$(cat /opt/pwn3/server/creds | grep 'Password:' | cut -d ":" -f 2- | xargs)
+cat >/opt/pwn3/client/PwnAdventure3_Data/PwnAdventure3/PwnAdventure3/Content/Server/server.ini <<EOL
 [MasterServer]
 Hostname=master.pwn3
 Port=3333
@@ -53,8 +57,6 @@ Username=$USER
 Password=$PW
 Instances=5
 EOL
-fi
-
 
 
 # run the server
