@@ -20,6 +20,7 @@ This setup is part of a [video series](https://www.youtube.com/playlist?list=PLh
 * [Flying and our first Flag! (Cow King) - Pwn Adventure 3: part 6](https://www.youtube.com/watch?v=VzZi2AGAsOY&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=5)
 * [Teleporting and Hovering (Unbearable Revenge) - Pwn Adventure 3: part 7](https://www.youtube.com/watch?v=E7e_-sqOo1M&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=6)
 * [Find the hidden Golden Eggs - Pwn Adventure 3: part 8](https://www.youtube.com/watch?v=it5kqkE-KAo&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=7)
+* [Developing a TCP Network Proxy - Pwn Adventure 3: part 9](https://www.youtube.com/watch?v=iApNzWZG-10&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=8)
 
 ## Install Server
 
