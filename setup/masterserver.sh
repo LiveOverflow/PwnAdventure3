@@ -39,6 +39,9 @@ fi
 # cleanup all previous/old server master creds
 su pwn3 -c "psql master -f $PWN3/setup/postgres_cleanup.sql"
 
+# give write access to server creds for pwn3
+chown pwn3:pwn3 /opt/pwn3/server/creds
+
 # get new master server creds
 su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-server-account > /opt/pwn3/server/creds"
 
