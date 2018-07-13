@@ -22,6 +22,7 @@ This setup is part of a [video series](https://www.youtube.com/playlist?list=PLh
 * [Find the hidden Golden Eggs - Pwn Adventure 3: part 8](https://www.youtube.com/watch?v=it5kqkE-KAo&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=7)
 * [Developing a TCP Network Proxy - Pwn Adventure 3: part 9](https://www.youtube.com/watch?v=iApNzWZG-10&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=8)
 * [Analyzing the Game Network Protocol - Pwn Adventure 3: part 10](https://www.youtube.com/watch?v=TG_FVzBijrk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=9)
+* [Implementing Autoloot with the Proxy - Pwn Adventure 3: part 11](https://www.youtube.com/watch?v=_ePSezu33vw&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=10)
 
 ## Install Server
 
