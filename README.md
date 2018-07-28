@@ -23,6 +23,9 @@ This setup is part of a [video series](https://www.youtube.com/playlist?list=PLh
 * [Developing a TCP Network Proxy - Pwn Adventure 3: part 9](https://www.youtube.com/watch?v=iApNzWZG-10&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=8)
 * [Analyzing the Game Network Protocol - Pwn Adventure 3: part 10](https://www.youtube.com/watch?v=TG_FVzBijrk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=9)
 * [Implementing Autoloot with the Proxy - Pwn Adventure 3: part 11](https://www.youtube.com/watch?v=_ePSezu33vw&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=10)
+* [Exploiting an Integer Overflow (Fire and Ice) - Pwn Adventure 3](https://www.youtube.com/watch?v=XrE-RfAYrzs&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=11)
+* [†: Signed and Unsigned Integers - Integer Overflows - Pwn Adventure 3](https://www.youtube.com/watch?v=9NYleo0r4Eg&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=12)
+* [Analyzing the Blocky Logic Puzzle - Pwn Adventure 3](https://www.youtube.com/watch?v=PQPO5Z4lVTU&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=13)
 
 ## Install Server
 
