@@ -1,3 +1,14 @@
+#include <set>
+#include <vector>
+#include <functional>
+#include <map>
+#include <string>
+#include <stdint.h>
+#include <mutex>
+#include <queue>
+#include <condition_variable>
+#include <thread>
+
 class IAchievement;
 class IQuestState;
 class IQuest;
@@ -203,34 +214,6 @@ template <class T> struct ActorRef {
     bool operator<(const ActorRef<T> &) const;
 };
 
-//WriteStream
-/*
-template< typename IActor>
-struct ActorRef {
-    IActor *m_object;
-};
-
-template< typename IPlayer>
-struct ActorRef {
-    IPlayer *m_object;
-};
-
-template< typename NPC>
-struct ActorRef {
-    NPC *m_object;
-};
-
-template< typename Bear>
-struct ActorRef {
-    Bear *m_object;
-};
-
-template< typename BearChest>
-struct ActorRef {
-    BearChest *m_object;
-};*/
-
-
 class IActor {
   public:
     virtual ~IActor();
@@ -328,9 +311,8 @@ class Actor : public IActor {
     bool MoveToRandomLocationInRadius(float);
     bool MoveToActor(IActor *);
     bool GetState(const std::string &);
-    //virtual void UpdateState(const std::string &, bool);
-    //virtual void TriggerEvent(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, IActor*, bool);
-    //virtual void TriggerEvent(const std::string &, IActor *, bool);
+    virtual void UpdateState(const std::string &, bool);
+    virtual void TriggerEvent(const std::string &, IActor *, bool);
     const std::map<std::string, bool> & GetStates();
     IActor * LineTraceTo(const Vector3 &);
     void FireBullets(IItem *, int32_t, DamageType, float, uint32_t, float);
@@ -760,7 +742,7 @@ class Player : public Actor, public IPlayer {
     virtual IInventory * GetInventory();
     virtual uint32_t GetItemCount(IItem *);
     virtual uint32_t GetLoadedAmmo(IItem *);
-    virtual bool AddItem(IItem *, uint32_t, bool);
+    virtual bool AddItem(IItem *item, uint32_t count, bool allowPartial);
     virtual bool RemoveItem(IItem *, uint32_t);
     bool PerformAddItem(IItem *, uint32_t, bool);
     bool PerformRemoveItem(IItem *, uint32_t);
@@ -1247,95 +1229,20 @@ class FastTravelDestination {
     void AddToListIfValid(std::vector<FastTravelInfo> &, Player *, const std::string &);
 };
 
-class MasterServerConnection;
-class GameServerConnection;
-class CharacterInfo;
+struct SSL_CTX;
+class SSLSocket;
 
-class GameAPI {
+class ThreadActionQueue {
   private:
-    void InitObjects();
-    void StartServerListener(const ServerInfo &);
+    std::mutex m_mutex;
+    std::vector<std::function<void ()>, std::allocator<std::function<void ()> > > m_actions;
+
+    std::vector<std::function<void ()>, std::allocator<std::function<void ()> > > GetActionsForThisTick();
   public:
-    GameAPI();
-    void InitLocal(ILocalPlayer *);
-    void InitClient(ILocalPlayer *);
-    void InitServer(const char *, uint16_t, int32_t, const char *, uint16_t, const char *, const char *, const char *);
-    void Shutdown();
-    void Tick(float);
-    bool IsAuthority();
-    bool IsDedicatedServer();
-    bool IsTransitioningToNewServer();
-    IItem * GetItemByName(const char *);
-    IQuest * GetQuestByName(const char *);
-    FastTravelDestination * GetFastTravelDestination(const std::string &);
-    IAchievement * GetAchievement(const char *);
-    IAchievementList * GetAchievements();
-    std::vector<IAchievement*, std::allocator<IAchievement*> > GetAchievementList();
-    std::vector<ItemPickup*, std::allocator<ItemPickup*> > GetGoldenEggList();
-    size_t GetGoldenEggCount();
-    virtual bool SpawnActor(IActor *, const Vector3 &, const Rotation &, bool);
-    virtual bool SpawnActorAtNamedLocation(IActor *, const char *);
-    virtual bool SpawnRemotePlayer(IPlayer *, const Vector3 &, const Rotation &);
-    virtual void DamageInRadius(IActor *, IItem *, const Vector3 &, float, int32_t, DamageType);
-    virtual size_t GetNamedLocationPoints(const char *, LocationAndRotation *&);
-    virtual void FreeNamedLocationPoints(LocationAndRotation *);
-    std::vector<LocationAndRotation> GetNamedLocationPointList(const char *);
-    bool GetNamedLocationPoint(const std::string &, LocationAndRotation &);
-    std::vector<LocationAndRotation> GetSpawnPoints(const char *);
-    void GiveAll(IPlayer *);
-    virtual Vector3 GetDirectionFromRotation(const Rotation &);
-    virtual Rotation GetRotationFromDirection(const Vector3 &);
-    virtual void OnWeaponFired(IItem *, const Vector3 &, const Vector3 &);
-    virtual void OnBulletHitActor(IItem *, IActor *, const Vector3 &, const Vector3 &);
-    virtual void OnBulletHitWorld(IItem *, const Vector3 &, const Vector3 &);
-    virtual void OnLog(const char *);
-    void Log(const char *);
-    virtual void OnMasterServerConnected(bool, const char *, const char *);
-    virtual void OnLoginComplete(bool, const char *, bool, CharacterInfo *, size_t);
-    virtual void OnRegisterComplete(bool, const char *, const char *, bool);
-    virtual void OnCreateCharacterComplete(bool, const char *, int32_t);
-    virtual void OnDeleteCharacterComplete(bool, int32_t);
-    virtual void OnJoinGameServerComplete(bool, const char *, bool, const char *, uint16_t, const char *);
-    virtual void OnGameServerConnected(bool, const char *, const Vector3 &, const Rotation &);
-    virtual void OnTransitionToNewServer();
-    virtual void OnSubmitAnswerComplete(bool, const char *);
-    virtual void OnTeammatesListed(const char **, const char **, size_t);
-    virtual uint32_t GetDefaultCircuitInputs(const char *);
-    virtual size_t GetCircuitOutputCount(const char *);
-    virtual void GetCircuitOutputs(const char *, uint32_t, bool *, size_t, bool *);
-    LootTier * GetLootTier(uint32_t);
     void Enqueue(const std::function<void ()> &);
-    void Process(const std::function<void ()> &);
-    MasterServerConnection * GetMasterServer();
-    void UpdatePlayerCounts();
-    void GetTeammates();
-    void Login(const char *, const char *);
-    void CreateCharacter(const char *, uint8_t, uint32_t *);
-    void DeleteCharacter(int32_t);
-    void JoinGameServer(int32_t, bool);
-    void SubmitAnswer(const char *, const char *);
-    GameServerConnection * GetGameServer();
-    void ConnectToGameServer(const char *, uint16_t, int32_t, const char *);
-    bool IsConnectedToMasterServer();
-    bool IsConnectedToGameServer();
-    int32_t GetUserId();
-    int32_t GetCharacterId();
-    const char * GetUserName();
-    const char * GetTeamName();
-    const char * GetTeamHash();
-    void ConnectToMasterServer(const char *, uint16_t, const char *);
-    void DisconnectFromMasterServer();
-    void Register(const char *, const char *, const char *);
-    void TransitionToNewGameServer();
-    Actor * CreateRemoteActorByName(const std::string &, bool);
-    Actor * CreateRemoteActorByNameWithOwner(const std::string &, bool, IActor *);
-    bool HasActorFactory(const std::string &);
-    int32_t GetTeamPlayerCount();
-    int32_t GetTotalPlayerCount();
+    void Process();
+    void Clear();
 };
-
-
-/*
 
 class ServerConnection {
   protected:
@@ -1360,9 +1267,76 @@ class ServerConnection {
     bool IsReadyToDisconnect() const;
     void ProcessGameThreadActions();
     void Disconnect();
-}
+};
 
+class MasterServerConnection : public ServerConnection {
+  protected:
+    SSL_CTX *m_context;
+    SSLSocket *m_sock;
 
+    void NotifyDisconnect();
+    virtual const char * GetServerType();
+  public:
+	struct TeamMemberInfo {
+		std::string name;
+		std::string location;
+	};
+ 
+	struct CharacterInfo {
+		int32_t id;
+		std::string name;
+		std::string team;
+		std::string location;
+		uint8_t avatar;
+		uint32_t colors[4];
+		uint32_t flags;
+		bool transitioning;
+		Vector3 transitionPoint;
+		int32_t transitionHealth;
+		int32_t transitionMana;
+		bool transitionPvP;
+		bool admin;
+		std::map<std::basic_string<char>, QuestStateInfo, std::less<std::basic_string<char> >, std::allocator<std::pair<std::basic_string<char> const, QuestStateInfo> > > quests;
+		std::string activeQuest;
+		std::map<std::basic_string<char>, ItemCountInfo, std::less<std::basic_string<char> >, std::allocator<std::pair<std::basic_string<char> const, ItemCountInfo> > > items;
+		std::vector<std::basic_string<char>, std::allocator<std::basic_string<char> > > equipped;
+		uint8_t activeSlot;
+		std::set<std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::basic_string<char> > > pickups;
+	};
+  
+    MasterServerConnection();
+    virtual ~MasterServerConnection();
+    void Connect(const std::string &, uint16_t, const std::string &, 
+        const std::function<void (bool, const std::basic_string<char> &, const std::basic_string<char> &)> &);
+    void Login(const std::string &, const std::string &, 
+        const std::function<void (bool, const std::basic_string<char> &, int, const std::basic_string<char> &, const std::basic_string<char> &, bool)> &);
+    void Register(const std::string &, const std::string &, const std::string &, 
+        const std::function<void (bool, const std::basic_string<char> &, int, const std::basic_string<char> &, const std::basic_string<char> &, bool)> &);
+    void GetPlayerCounts(const std::function<void (int, int)> &);
+    void GetTeammates(const std::function<void (const std::vector<MasterServerConnection::TeamMemberInfo, std::allocator<MasterServerConnection::TeamMemberInfo> > &)> &);
+    void GetCharacterList(const std::function<void (bool, const std::vector<MasterServerConnection::CharacterInfo, std::allocator<MasterServerConnection::CharacterInfo> > &)> &);
+    void CreateCharacter(const std::string &, uint8_t, uint32_t *, 
+        const std::function<void (bool, const std::basic_string<char> &, int)> &);
+    void DeleteCharacter(int32_t, const std::function<void (bool)> &);
+    void JoinGameServer(int32_t, 
+        const std::function<void (bool, const std::basic_string<char> &, bool, const std::basic_string<char> &, unsigned short, const std::basic_string<char> &, const MasterServerConnection::CharacterInfo &)> &);
+    void GetFlag(const std::string &, const std::function<void (bool, const std::basic_string<char> &, bool)> &);
+    void SubmitFlag(const std::string &, const std::function<void (bool, const std::basic_string<char> &)> &);
+    void SubmitAnswer(const std::string &, const std::string &, 
+        const std::function<void (bool, const std::basic_string<char> &)> &);
+    void Heartbeat();
+    bool ValidateCharacterToken(int32_t, const std::string &, MasterServerConnection::CharacterInfo &);
+    void AddServerToPool(const std::string &, uint16_t);
+    bool CharacterRegionChange(int32_t, const std::string &, const Vector3 &, int32_t, int32_t, bool);
+    void StartQuest(Player *, const std::string &, const std::string &, uint32_t);
+    void UpdateQuest(Player *, const std::string &, const std::string &, uint32_t);
+    void CompleteQuest(Player *, const std::string &);
+    void SetActiveQuest(Player *, const std::string &);
+    void UpdateItems(Player *);
+    void MarkAsPickedUp(Player *, const std::string &);
+};
+
+class TCPSocket;
 
 class GameServerConnection : public ServerConnection {
   protected:
@@ -1437,8 +1411,90 @@ class GameServerConnection : public ServerConnection {
     void SetPvPDesired(bool);
     void SubmitDLCKey(const std::string &);
     void SetCircuitInputs(const std::string &, uint32_t);
-}
-*/
+};
+
+class GameAPI {
+  private:
+    void InitObjects();
+    void StartServerListener(const ServerInfo &);
+  public:
+    GameAPI();
+    void InitLocal(ILocalPlayer *);
+    void InitClient(ILocalPlayer *);
+    void InitServer(const char *, uint16_t, int32_t, const char *, uint16_t, const char *, const char *, const char *);
+    void Shutdown();
+    void Tick(float);
+    bool IsAuthority();
+    bool IsDedicatedServer();
+    bool IsTransitioningToNewServer();
+    IItem * GetItemByName(const char *);
+    IQuest * GetQuestByName(const char *);
+    FastTravelDestination * GetFastTravelDestination(const std::string &);
+    IAchievement * GetAchievement(const char *);
+    IAchievementList * GetAchievements();
+    std::vector<IAchievement*, std::allocator<IAchievement*> > GetAchievementList();
+    std::vector<ItemPickup*, std::allocator<ItemPickup*> > GetGoldenEggList();
+    size_t GetGoldenEggCount();
+    virtual bool SpawnActor(IActor *, const Vector3 &, const Rotation &, bool);
+    virtual bool SpawnActorAtNamedLocation(IActor *, const char *);
+    virtual bool SpawnRemotePlayer(IPlayer *, const Vector3 &, const Rotation &);
+    virtual void DamageInRadius(IActor *, IItem *, const Vector3 &, float, int32_t, DamageType);
+    virtual size_t GetNamedLocationPoints(const char *, LocationAndRotation *&);
+    virtual void FreeNamedLocationPoints(LocationAndRotation *);
+    std::vector<LocationAndRotation> GetNamedLocationPointList(const char *);
+    bool GetNamedLocationPoint(const std::string &, LocationAndRotation &);
+    std::vector<LocationAndRotation> GetSpawnPoints(const char *);
+    void GiveAll(IPlayer *);
+    virtual Vector3 GetDirectionFromRotation(const Rotation &);
+    virtual Rotation GetRotationFromDirection(const Vector3 &);
+    virtual void OnWeaponFired(IItem *, const Vector3 &, const Vector3 &);
+    virtual void OnBulletHitActor(IItem *, IActor *, const Vector3 &, const Vector3 &);
+    virtual void OnBulletHitWorld(IItem *, const Vector3 &, const Vector3 &);
+    virtual void OnLog(const char *);
+    void Log(const char *);
+    virtual void OnMasterServerConnected(bool, const char *, const char *);
+    virtual void OnLoginComplete(bool, const char *, bool, MasterServerConnection::CharacterInfo *, size_t);
+    virtual void OnRegisterComplete(bool, const char *, const char *, bool);
+    virtual void OnCreateCharacterComplete(bool, const char *, int32_t);
+    virtual void OnDeleteCharacterComplete(bool, int32_t);
+    virtual void OnJoinGameServerComplete(bool, const char *, bool, const char *, uint16_t, const char *);
+    virtual void OnGameServerConnected(bool, const char *, const Vector3 &, const Rotation &);
+    virtual void OnTransitionToNewServer();
+    virtual void OnSubmitAnswerComplete(bool, const char *);
+    virtual void OnTeammatesListed(const char **, const char **, size_t);
+    virtual uint32_t GetDefaultCircuitInputs(const char *);
+    virtual size_t GetCircuitOutputCount(const char *);
+    virtual void GetCircuitOutputs(const char *, uint32_t, bool *, size_t, bool *);
+    LootTier * GetLootTier(uint32_t);
+    void Enqueue(const std::function<void ()> &);
+    void Process(const std::function<void ()> &);
+    MasterServerConnection * GetMasterServer();
+    void UpdatePlayerCounts();
+    void GetTeammates();
+    void Login(const char *, const char *);
+    void CreateCharacter(const char *, uint8_t, uint32_t *);
+    void DeleteCharacter(int32_t);
+    void JoinGameServer(int32_t, bool);
+    void SubmitAnswer(const char *, const char *);
+    GameServerConnection * GetGameServer();
+    void ConnectToGameServer(const char *, uint16_t, int32_t, const char *);
+    bool IsConnectedToMasterServer();
+    bool IsConnectedToGameServer();
+    int32_t GetUserId();
+    int32_t GetCharacterId();
+    const char * GetUserName();
+    const char * GetTeamName();
+    const char * GetTeamHash();
+    void ConnectToMasterServer(const char *, uint16_t, const char *);
+    void DisconnectFromMasterServer();
+    void Register(const char *, const char *, const char *);
+    void TransitionToNewGameServer();
+    Actor * CreateRemoteActorByName(const std::string &, bool);
+    Actor * CreateRemoteActorByNameWithOwner(const std::string &, bool, IActor *);
+    bool HasActorFactory(const std::string &);
+    int32_t GetTeamPlayerCount();
+    int32_t GetTotalPlayerCount();
+};
 
 class KeyVerifier {
   public:
@@ -1447,14 +1503,15 @@ class KeyVerifier {
 
 enum EnemyRank {NormalEnemy, EliteEnemy, LegendaryEnemy};
 
-class LootTable;
-
-
 class LootTable {
   private:
+	struct TableEntry {
+		uint32_t value;
+		float weight;
+	};
     float m_dropChance;
-    //std::vector<LootTable::TableEntry> m_tiers;
-    //std::vector<LootTable::TableEntry> m_counts;
+    std::vector<LootTable::TableEntry, std::allocator<LootTable::TableEntry> > m_tiers;
+    std::vector<LootTable::TableEntry, std::allocator<LootTable::TableEntry> > m_counts;
     float m_totalTierWeight;
     float m_totalCountWeight;
     std::vector<LootEntry> m_additionalItems;
@@ -1574,3 +1631,7 @@ class Magmarok : public Enemy {
     virtual void Tick(float);
     virtual void OnPrepareAttack(Actor *);
 };
+
+extern GameAPI *Game;
+extern World *GameWorld;
+
