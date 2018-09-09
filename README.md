@@ -12,27 +12,30 @@ Welcome to Pwnie Island!
 
 This setup is part of a [video series](https://www.youtube.com/playlist?list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG) covering the different hacks and challenges in this game.
 
-* [Let's Play/Hack - Pwn Adventure 3: Pwnie Island - part 1](https://www.youtube.com/watch?v=RDZnlcnmPUA&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgGi&index=1)
-* [Setup Private Server with Docker - Pwn Adventure 3: part 2](https://www.youtube.com/watch?v=VkXZXwQP5FM&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=2)
-* [Information Gathering / Recon - Pwn Adventure 3: part 3](https://www.youtube.com/watch?v=pzM4o6qxssk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=3)
-* [Recover Game Classes with gdb - Pwn Adventure 3: part 4](https://www.youtube.com/watch?v=8wz2CM0483o&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=4)
-* [Hooking on Linux with LD_PRELOAD - Pwn Adventure 3: part 5](https://www.youtube.com/watch?v=W7MC05_JN68&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=5)
-* [Flying and our first Flag! (Cow King) - Pwn Adventure 3: part 6](https://www.youtube.com/watch?v=VzZi2AGAsOY&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=6)
-* [Teleporting and Hovering (Unbearable Revenge) - Pwn Adventure 3: part 7](https://www.youtube.com/watch?v=E7e_-sqOo1M&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=7)
-* [Find the hidden Golden Eggs - Pwn Adventure 3: part 8](https://www.youtube.com/watch?v=it5kqkE-KAo&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=8)
-* [Developing a TCP Network Proxy - Pwn Adventure 3: part 9](https://www.youtube.com/watch?v=iApNzWZG-10&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=9)
-* [Analyzing the Game Network Protocol - Pwn Adventure 3: part 10](https://www.youtube.com/watch?v=TG_FVzBijrk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=10)
-* [Implementing Autoloot with the Proxy - Pwn Adventure 3: part 11](https://www.youtube.com/watch?v=_ePSezu33vw&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=11)
-* [Exploiting an Integer Overflow (Fire and Ice) - Pwn Adventure 3: part 12](https://www.youtube.com/watch?v=XrE-RfAYrzs&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=12)
-* [†: Signed and Unsigned Integers - Integer Overflows - Pwn Adventure 3: part 12.5](https://www.youtube.com/watch?v=9NYleo0r4Eg&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=13)
-* [Analyzing the Blocky Logic Puzzle - Pwn Adventure 3: part 13](https://www.youtube.com/watch?v=PQPO5Z4lVTU&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=14)
-* [Failing at Machine Learning (Blocky part 2) - Pwn Adventure 3: part 14](https://www.youtube.com/watch?v=L8sH8VM2Bd0&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=15)
-* [Reversing Input Validation (Keygen part 1) - Pwn Adventure 3: part 15](https://www.youtube.com/watch?v=8ieAh19vrYc&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=16)
-* [Reversing Custom Encoding (Keygen part 2) - Pwn Adventure 3: part 16](https://www.youtube.com/watch?v=JDXU2shkNSE&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=17)
-* [Understanding the Key Verification Algorithm (Keygen part 3) - Pwn Adventure 3: part 17](https://www.youtube.com/watch?v=WgRAYOXBVxs&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=18)
-* [RSA Implemented in Assembler (Keygen part 4) - Pwn Adventure 3: part 18](https://www.youtube.com/watch?v=dcR1dkZJ7iU&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=19)
-* [RSA Implemented in JavaScript (Keygen part 5) - Pwn Adventure 3: part 19](https://www.youtube.com/watch?v=2pqHsW3yNlA&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=20)
-* [The Last Flag (Overachiever) - Pwn Adventure 3: part 20](https://www.youtube.com/watch?v=6htg9MGMOYE&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=21)
+* [Let's Play/Hack - Pwn Adventure 3: Pwnie Island - part 1](https://www.youtube.com/watch?v=RDZnlcnmPUA&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgGi&index=1) [39:20]
+* [Setup Private Server with Docker - Pwn Adventure 3: part 2](https://www.youtube.com/watch?v=VkXZXwQP5FM&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=2) [8:42]
+* [Information Gathering / Recon - Pwn Adventure 3: part 3](https://www.youtube.com/watch?v=pzM4o6qxssk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=3) [14:09]
+* [Recover Game Classes with gdb - Pwn Adventure 3: part 4](https://www.youtube.com/watch?v=8wz2CM0483o&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=4) [11:28]
+* [Hooking on Linux with LD_PRELOAD - Pwn Adventure 3: part 5](https://www.youtube.com/watch?v=W7MC05_JN68&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=5) [12:07]
+* [Flying and our first Flag! (Cow King) - Pwn Adventure 3: part 6](https://www.youtube.com/watch?v=VzZi2AGAsOY&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=6) [6:34]
+* [Teleporting and Hovering (Unbearable Revenge) - Pwn Adventure 3: part 7](https://www.youtube.com/watch?v=E7e_-sqOo1M&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=7) [9:31]
+* [Find the hidden Golden Eggs - Pwn Adventure 3: part 8](https://www.youtube.com/watch?v=it5kqkE-KAo&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=8) [10:26]
+* [Developing a TCP Network Proxy - Pwn Adventure 3: part 9](https://www.youtube.com/watch?v=iApNzWZG-10&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=9) [12:26]
+* [Analyzing the Game Network Protocol - Pwn Adventure 3: part 10](https://www.youtube.com/watch?v=TG_FVzBijrk&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=10) [14:48]
+* [Implementing Autoloot with the Proxy - Pwn Adventure 3: part 11](https://www.youtube.com/watch?v=_ePSezu33vw&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=11) [12:33]
+* [Exploiting an Integer Overflow (Fire and Ice) - Pwn Adventure 3: part 12](https://www.youtube.com/watch?v=XrE-RfAYrzs&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=12) [19:59]
+* [†: Signed and Unsigned Integers - Integer Overflows - Pwn Adventure 3: part 12.5](https://www.youtube.com/watch?v=9NYleo0r4Eg&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=13) [3:12]
+* [Analyzing the Blocky Logic Puzzle - Pwn Adventure 3: part 13](https://www.youtube.com/watch?v=PQPO5Z4lVTU&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=14) [10:51]
+* [Failing at Machine Learning (Blocky part 2) - Pwn Adventure 3: part 14](https://www.youtube.com/watch?v=L8sH8VM2Bd0&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=15) [14:34]
+* [Reversing Input Validation (Keygen part 1) - Pwn Adventure 3: part 15](https://www.youtube.com/watch?v=8ieAh19vrYc&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=16) [12:27]
+* [Reversing Custom Encoding (Keygen part 2) - Pwn Adventure 3: part 16](https://www.youtube.com/watch?v=JDXU2shkNSE&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=17) [16:01]
+* [Understanding the Key Verification Algorithm (Keygen part 3) - Pwn Adventure 3: part 17](https://www.youtube.com/watch?v=WgRAYOXBVxs&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=18) [13:10]
+* [RSA Implemented in Assembler (Keygen part 4) - Pwn Adventure 3: part 18](https://www.youtube.com/watch?v=dcR1dkZJ7iU&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=19) [16:23]
+* [RSA Implemented in JavaScript (Keygen part 5) - Pwn Adventure 3: part 19](https://www.youtube.com/watch?v=2pqHsW3yNlA&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=20) [4:32]
+* [The Last Flag (Overachiever) - Pwn Adventure 3: part 20](https://www.youtube.com/watch?v=6htg9MGMOYE&list=PLhixgUqwRTjzzBeFSHXrw9DnQtssdAwgG&index=21) [5:31]
+
+Excluding the casual Let's Play at the start, the whole series is covering all challenges of Pwn Adventure 3 in less than 4 hours.
+
 
 ## Install Server
 
