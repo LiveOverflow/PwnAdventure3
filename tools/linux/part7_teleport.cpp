@@ -30,6 +30,7 @@ void Player::Chat(const char *msg) {
         if(frozen) frozen = false;
         else frozen = true;
     }
+    delete new_pos;
 }
 
 bool Player::CanJump() {
