@@ -5,7 +5,7 @@ ENV PWN3=/opt/pwn3
 
 RUN echo "deb http://security.ubuntu.com/ubuntu xenial-security main" >> /etc/apt/sources.list \
   && apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y nano postgresql libssl1.0.0 \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y nano vim postgresql libssl1.0.0 \
   && apt-get clean \
   && rm -rf /var/lib/apt \
   && adduser pwn3 --system --shell /bin/bash --group
