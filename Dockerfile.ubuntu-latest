@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+
+ENV PWN3=/opt/pwn3
+
+RUN echo "deb http://security.ubuntu.com/ubuntu xenial-security main" >> /etc/apt/sources.list \
+  && apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y nano vim postgresql libssl1.0.0 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt \
+  && adduser pwn3 --system --shell /bin/bash --group
+
+EXPOSE 5432
+
+ADD --chown=pwn3 server/MasterServer/initdb.sql $PWN3/initdb.sql
+ADD --chown=pwn3 setup $PWN3/setup

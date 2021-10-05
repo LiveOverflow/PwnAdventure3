@@ -3,8 +3,8 @@ services:
         master:
                 build:
                         context: .
-                        dockerfile: ./Dockerfile
-                image: pwn3server
+                        dockerfile: ./Dockerfile.ubuntu-latest
+                image: pwn3server-ubuntulatest
                 hostname: master.pwn3
                 networks:
                         default:
@@ -26,8 +26,8 @@ services:
         game:
                 build:
                         context: .
-                        dockerfile: ./Dockerfile
-                image: pwn3server
+                        dockerfile: ./Dockerfile.ubuntu-latest
+                image: pwn3server-ubuntulatest
                 hostname: game.pwn3
                 networks:
                         default:

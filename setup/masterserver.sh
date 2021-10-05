@@ -13,14 +13,19 @@ _term() {
   exit 0
 }
 
+echo "Setup process kill trap"
 trap _term SIGTERM SIGKILL
 
+echo "Start postgresql service"
 service postgresql start
 
+echo "Sleep 10"
 sleep 10
 
+echo "Setup postgresql using template $PWN3/setup/postgres_init.sql"
 su postgres -c "psql -f $PWN3/setup/postgres_init.sql -d template1"
 
+echo "Cleanup previous logs"
 # clean up
 su pwn3 -c "rm /opt/pwn3/client/PwnAdventure3_Data/PwnAdventure3/PwnAdventure3/Saved/Logs/*"
 
@@ -36,12 +41,15 @@ else
 	su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-admin-team Admin"
 fi
 
+echo "Cleanup previous server creds using $PWN3/setup/postgres_cleanup.sql"
 # cleanup all previous/old server master creds
 su pwn3 -c "psql master -f $PWN3/setup/postgres_cleanup.sql"
 
+echo "Setup new server creds"
 # get new master server creds
 su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer --create-server-account > /opt/pwn3/server/creds"
 
+echo "Write new server creds to server.ini"
 # write the new creds to the server.ini
 USER=$(cat /opt/pwn3/server/creds | grep 'Username:' | cut -d ":" -f 2- | xargs)
 PW=$(cat /opt/pwn3/server/creds | grep 'Password:' | cut -d ":" -f 2- | xargs)
@@ -58,7 +66,7 @@ Password=$PW
 Instances=5
 EOL
 
-
+echo "Run the server"
 # run the server
 su pwn3 -c "cd /opt/pwn3/server/MasterServer/ && ./MasterServer"  &
 
