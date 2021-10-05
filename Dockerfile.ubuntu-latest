@@ -14,4 +14,3 @@ EXPOSE 5432
 
 ADD --chown=pwn3 server/MasterServer/initdb.sql $PWN3/initdb.sql
 ADD --chown=pwn3 setup $PWN3/setup
-
