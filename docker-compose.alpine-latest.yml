@@ -1,10 +1,11 @@
-version: '3.2'
+version: '3.4'
 services:
         master:
                 build:
                         context: .
-                        dockerfile: ./Dockerfile
-                image: pwn3server
+                        dockerfile: ./Dockerfile.alpine-latest
+                image: pwn3server-alpinelatest
+                container_name: master-alpinelatest.pwn3
                 hostname: master.pwn3
                 networks:
                         default:
@@ -22,12 +23,13 @@ services:
                         - type: bind
                           source: "./postgres-data"
                           target: "/opt/pwn3/postgres-data"
-                command: "/opt/pwn3/setup/masterserver.sh"
+                command: "/opt/pwn3/setup/masterserver-alpinelatest.sh"
         game:
                 build:
                         context: .
-                        dockerfile: ./Dockerfile
-                image: pwn3server
+                        dockerfile: ./Dockerfile.alpine-latest
+                image: pwn3server-alpinelatest
+                container_name: game-alpinelatest.pwn3
                 hostname: game.pwn3
                 networks:
                         default:

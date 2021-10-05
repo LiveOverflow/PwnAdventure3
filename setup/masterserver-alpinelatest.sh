@@ -17,7 +17,8 @@ echo "Setup process kill trap"
 trap _term SIGTERM SIGKILL
 
 echo "Start postgresql service"
-service postgresql start
+/etc/init.d/postgresql start
+rc-update add postgresql
 
 echo "Sleep 10"
 sleep 10
